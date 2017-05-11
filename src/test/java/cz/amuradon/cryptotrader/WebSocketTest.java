@@ -1,39 +1,40 @@
 package cz.amuradon.cryptotrader;
 
-import org.junit.Test;
-import org.springframework.messaging.converter.StringMessageConverter;
-import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.web.socket.client.WebSocketClient;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
+import java.util.concurrent.TimeUnit;
 
-import java.lang.reflect.Type;
+import org.junit.Test;
+
+import rx.functions.Action1;
+import ws.wamp.jawampa.WampClient;
+import ws.wamp.jawampa.WampClientBuilder;
+import ws.wamp.jawampa.connection.IWampConnectorProvider;
+import ws.wamp.jawampa.transport.netty.NettyWampClientConnectorProvider;
 
 public class WebSocketTest {
 
-    @Test
-    public void test() {
-        WebSocketClient client = new StandardWebSocketClient();
-        WebSocketStompClient stompClient = new WebSocketStompClient(client);
-        stompClient.setMessageConverter(new StringMessageConverter());
-        
-        stompClient.connect("wss://api.poloniex.com", new StompSessionHandlerAdapter() {
-            @Override
-            public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-                session.subscribe("ticker", new StompFrameHandler() {
-                    
-                    public void handleFrame(StompHeaders headers, Object payload) {
-                        System.out.println(payload);
-                    }
-                    
-                    public Type getPayloadType(StompHeaders headers) {
-                        return Object.class;
-                    }
-                });
-            }
-        });
-    }
+	@Test
+	public void test() throws Exception {
+		WampClient client;
+		WampClientBuilder builder = new WampClientBuilder();
+		IWampConnectorProvider connectorProvider = new NettyWampClientConnectorProvider();
+		builder.withConnectorProvider(connectorProvider).withUri("wss://api.poloniex.com").withRealm("realm1")
+				.withInfiniteReconnects().withReconnectInterval(5, TimeUnit.SECONDS);
+		client = builder.build();
+
+		client.statusChanged().subscribe(new Action1<WampClient.State>() {
+
+			@Override
+			public void call(WampClient.State t1) {
+				if (t1 instanceof WampClient.ConnectedState) {
+					// subscription =
+					client.makeSubscription("ticker").subscribe((s) -> {
+						System.out.println(s.arguments());
+					});
+				}
+			}
+		});
+		client.open();
+
+		Thread.sleep(10000);
+	}
 }

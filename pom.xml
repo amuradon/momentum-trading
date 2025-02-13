@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cz.amuradon.tralon.pumpdetector</groupId>
-	<artifactId>pumpdetector</artifactId>
+	<groupId>cz.amuradon.tralon.pumptrader</groupId>
+	<artifactId>pumptrader</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -103,11 +103,19 @@
 			<groupId>org.apache.camel.quarkus</groupId>
     		<artifactId>camel-quarkus-jackson</artifactId>
 		</dependency>
-
+		<dependency>
+    		<groupId>org.apache.camel.quarkus</groupId>
+    		<artifactId>camel-quarkus-file</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-bean</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.quarkus</groupId>
+			<artifactId>camel-quarkus-log</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-telegram</artifactId>
@@ -116,11 +124,6 @@
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-seda</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-log</artifactId>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-jsonpath</artifactId>

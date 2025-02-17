@@ -1,7 +1,5 @@
 package cz.amuradon.tralon.pumpdetector;
 
-import java.util.List;
-
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
@@ -36,22 +34,26 @@ public class MyRouteBuilder extends EndpointRouteBuilder {
 	        .to("direct:processLatoken");
         
         from("timer:getDataPoloniex?period=1000&fixedRate=true")
-        		.routeId("getDataPoloniex")
+        	.routeId("getDataPoloniex")
             .to("vertx-http:https://api.poloniex.com/markets/ticker24h")
             .to("file:data/poloniex?fileName=${date:now:yyyyMMdd}/${date:now:yyyyMMdd-HH_mm_ss}.json")
             .to("direct:processPoloniex");
     	
+//    	from("file:data/xt/20250131?noop=true")
+//    		.log("${header.CamelFileNameConsumed}")
+//    		.to("direct:processXT");
+    	
 //    	from("file:data/mexc/20250131?noop=true")
 //    		.log("${header.CamelFileNameConsumed}")
-//    		.unmarshal().json(JsonLibrary.Jackson, MexcTicker[].class)
-//    		.process(e -> e.getMessage().setBody(new MexcTickers24h(e.getMessage().getBody(MexcTicker[].class))))
-//    		.bean(SnapshotProcessor.BEAN_NAME);
-//    	
+//    		.to("direct:processMexc");
+    	
+//    	from("file:data/latoken/20250202?noop=true")
+//	    	.log("${header.CamelFileNameConsumed}")
+//	    	.to("direct:processLatoken");
+    	
 //    	from("file:data/poloniex/20250202?noop=true")
 //	    	.log("${header.CamelFileNameConsumed}")
-//	    	.unmarshal().json(JsonLibrary.Jackson, PoloniexTicker[].class)
-//	    	.process(e -> e.getMessage().setBody(new PoloniexTickers24h(e.getMessage().getBody(PoloniexTicker[].class))))
-//	    	.bean(SnapshotProcessor.BEAN_NAME);
+//	    	.to("direct:processPoloniex");
         
         from("direct:processXT")
         	.unmarshal().json(JsonLibrary.Jackson, XtTickers24h.class)

@@ -55,23 +55,22 @@ public class MyRouteBuilder extends EndpointRouteBuilder {
         
         from("direct:processXT")
         	.unmarshal().json(JsonLibrary.Jackson, XtTickers24h.class)
-        	.bean(SnapshotProcessor.BEAN_NAME);
+        	.bean(SnapshotProcessor.class);
         	
         from("direct:processMexc")
 	        .unmarshal().json(JsonLibrary.Jackson, MexcTicker[].class)
 	    	.process(e -> e.getMessage().setBody(new MexcTickers24h(e.getMessage().getBody(MexcTicker[].class))))
-	    	.bean(SnapshotProcessor.BEAN_NAME);
+	    	.bean(SnapshotProcessor.class);
         
         from("direct:processLatoken")
 	        .unmarshal().json(JsonLibrary.Jackson, LatokenTicker[].class)
 	        .process(e -> e.getMessage().setBody(new LatokenTickers24h(e.getMessage().getBody(LatokenTicker[].class))))
-	        .log("${body}")
-	        .bean(SnapshotProcessor.BEAN_NAME);
+	        .bean(SnapshotProcessor.class);
         
         from("direct:processPoloniex")
 	        .unmarshal().json(JsonLibrary.Jackson, PoloniexTicker[].class)
 	    	.process(e -> e.getMessage().setBody(new PoloniexTickers24h(e.getMessage().getBody(PoloniexTicker[].class))))
-	    	.bean(SnapshotProcessor.BEAN_NAME);
+	    	.bean(SnapshotProcessor.class);
     }
 
 }

@@ -4,25 +4,20 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
 
 import org.apache.camel.Body;
-import org.apache.camel.Header;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import cz.amuradon.tralon.pumpdetector.tickers.Ticker;
 import cz.amuradon.tralon.pumpdetector.tickers.Tickers24h;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
-import jakarta.inject.Singleton;
 
-@Singleton
+// Dependent as there needs to be a new instance for each route
+@Dependent
 @Named(SnapshotProcessor.BEAN_NAME)
 @RegisterForReflection
 public class SnapshotProcessor {
@@ -34,6 +29,7 @@ public class SnapshotProcessor {
     private Map<String, Ticker> snapshots = new HashMap<>();
     
     public List<String> process(@Body Tickers24h tickers) {
+    	System.out.println("SnapshotProcessor " + this.hashCode());
         List<String> messages = new ArrayList<>();
         messages.add("\n");
         

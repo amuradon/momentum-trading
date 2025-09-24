@@ -1,14 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cz.amuradon.tralon.pumptrader</groupId>
-	<artifactId>pumptrader</artifactId>
+	<groupId>cz.amuradon.tralon.motrade</groupId>
+	<artifactId>motrade</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
-		<quarkus.platform.version>3.15.3</quarkus.platform.version>
-		<camel.quarkus.version>3.15.2</camel.quarkus.version>
+		<quarkus.platform.version>3.26.4</quarkus.platform.version>
 	</properties>
 
 	<dependencyManagement>
@@ -19,42 +19,6 @@
 				<version>${quarkus.platform.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>io.quarkus.platform</groupId>
-				<artifactId>quarkus-camel-bom</artifactId>
-				<version>${quarkus.platform.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-            	<groupId>org.junit</groupId>
-            	<artifactId>junit-bom</artifactId>
-            	<version>5.11.4</version>
-            	<type>pom</type>
-            	<scope>import</scope>
-        	</dependency>
-
-			<!-- Logging -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>2.0.16</version>
-			</dependency>
-
-			<!-- Testing -->
-			<!-- JUnit 5.10.3 has to stay due to quarkus-junit and mockito-junit transitive dependencies -->
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>5.10.3</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-junit-jupiter</artifactId>
-				<version>5.15.2</version>
-				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -67,81 +31,20 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-jackson</artifactId>
+			<artifactId>quarkus-rest-client-jackson</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+		    <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-qute</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-rest-qute</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkiverse.qute.web</groupId>
-			<artifactId>quarkus-qute-web</artifactId>
+			<artifactId>quarkus-scheduler</artifactId>
 		</dependency>
 
-		<!-- Camel -->
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-direct</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-timer</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-    		<artifactId>camel-quarkus-vertx-http</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-    		<artifactId>camel-quarkus-jackson</artifactId>
-		</dependency>
-		<dependency>
-    		<groupId>org.apache.camel.quarkus</groupId>
-    		<artifactId>camel-quarkus-file</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-bean</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-log</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-telegram</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-seda</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-jsonpath</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-caffeine</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
+		<!-- Testing -->
+		<!-- Versions of those JUnit and Mockito dependencies coming from
+		Quarkus BOM -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -149,10 +52,12 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -165,20 +70,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-stub</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel.quarkus</groupId>
-			<artifactId>camel-quarkus-mock</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- managed version comes from quarkus-bom ?! -->
-		<dependency>
 			<groupId>io.fabric8</groupId>
 			<artifactId>mockwebserver</artifactId>
-			<version>6.12.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -222,11 +115,12 @@
 					<version>3.5.2</version>
 					<configuration>
 						<systemPropertyVariables>
-							<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager> 
-							<quarkus.log.level>DEBUG</quarkus.log.level>  
+							<java.util.logging.manager>
+								org.jboss.logmanager.LogManager</java.util.logging.manager>
+							<quarkus.log.level>DEBUG</quarkus.log.level>
 							<maven.home>${env.M2_HOME}</maven.home>
 						</systemPropertyVariables>
-      				</configuration>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -256,5 +150,5 @@
 		</profile>
 	</profiles>
 
-	
+
 </project>

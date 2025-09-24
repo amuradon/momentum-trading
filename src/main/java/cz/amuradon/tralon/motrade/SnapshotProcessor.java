@@ -1,4 +1,4 @@
-package cz.amuradon.tralon.pumpdetector;
+package cz.amuradon.tralon.motrade;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,10 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.camel.Body;
-
-import cz.amuradon.tralon.pumpdetector.tickers.Ticker;
-import cz.amuradon.tralon.pumpdetector.tickers.Tickers24h;
+import cz.amuradon.tralon.motrade.tickers.Ticker;
+import cz.amuradon.tralon.motrade.tickers.Tickers24h;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.enterprise.context.Dependent;
@@ -28,7 +26,7 @@ public class SnapshotProcessor {
 
     private Map<String, Ticker> snapshots = new HashMap<>();
     
-    public List<String> process(@Body Tickers24h tickers) {
+    public List<String> process(Tickers24h tickers) {
     	System.out.println("SnapshotProcessor " + this.hashCode());
         List<String> messages = new ArrayList<>();
         messages.add("\n");

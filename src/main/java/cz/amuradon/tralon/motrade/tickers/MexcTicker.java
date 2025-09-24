@@ -1,4 +1,4 @@
-package cz.amuradon.tralon.pumpdetector.tickers;
+package cz.amuradon.tralon.motrade.tickers;
 
 import java.math.BigDecimal;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PoloniexTicker implements Ticker {
+public class MexcTicker implements Ticker {
 	
 	private String symbol;
     private long time;
@@ -30,7 +30,7 @@ public class PoloniexTicker implements Ticker {
 		return time;
 	}
 
-	@JsonProperty("ts")
+	@JsonProperty("closeTime")
 	@Override
 	public void setTime(long time) {
 		this.time = time;
@@ -41,7 +41,7 @@ public class PoloniexTicker implements Ticker {
 		return close;
 	}
 
-	@JsonProperty("close")
+	@JsonProperty("lastPrice")
 	@Override
 	public void setClose(String close) {
 		this.close = new BigDecimal(close);
@@ -52,7 +52,7 @@ public class PoloniexTicker implements Ticker {
 		return quantity;
 	}
 
-	@JsonProperty("quantity")
+	@JsonProperty("volume")
 	@Override
 	public void setQuantity(String quantity) {
 		this.quantity = new BigDecimal(quantity);
@@ -63,7 +63,7 @@ public class PoloniexTicker implements Ticker {
 		return volume;
 	}
 
-	@JsonProperty("amount")
+	@JsonProperty("quoteVolume")
 	@Override
 	public void setVolume(String volume) {
 		this.volume = new BigDecimal(volume);
@@ -71,6 +71,6 @@ public class PoloniexTicker implements Ticker {
 	
 	@Override
 	public String toString() {
-		return String.format("PoloniexTicker(%s, %d, %s, %s, %s)", symbol, time, close, quantity, volume);
+		return String.format("MexcTicker(%s, %d, %s, %s, %s)", symbol, time, close, quantity, volume);
 	}
 }

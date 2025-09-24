@@ -1,4 +1,4 @@
-package cz.amuradon.tralon.pumpdetector;
+package cz.amuradon.tralon.motrade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.camel.Body;
-import org.apache.camel.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.amuradon.tralon.pumpdetector.tickers.Ticker;
-import cz.amuradon.tralon.pumpdetector.tickers.Tickers24h;
+import cz.amuradon.tralon.motrade.tickers.Ticker;
+import cz.amuradon.tralon.motrade.tickers.Tickers24h;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -33,7 +31,7 @@ public class TickerProcessor {
     private Map<String, Ticker> minusOne = new HashMap<>();
     private Map<String, Ticker> minusTwo = new HashMap<>();
     
-    public List<String> process(@Header(EXCHANGE_HEADER_NAME) String exchange, @Body Tickers24h tickers) {
+    public List<String> process(String exchange, Tickers24h tickers) {
         List<String> messages = new ArrayList<>();
         messages.add("\n");
         

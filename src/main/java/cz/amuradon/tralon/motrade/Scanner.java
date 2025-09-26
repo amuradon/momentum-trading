@@ -63,7 +63,7 @@ public class Scanner {
 				BigDecimal m1PriceChange = getPercentage(lastPrice, m1.lastPrice());
 				BigDecimal m5PriceChange = getPercentage(lastPrice, m5.lastPrice());
 				BigDecimal m15PriceChange = getPercentage(lastPrice, m15.lastPrice());
-				if (aboveThreshold(m1PriceChange) || aboveThreshold(m5PriceChange) || aboveThreshold(m15PriceChange)) {
+				if (aboveThreshold(m1PriceChange) || aboveThreshold(m5PriceChange)) {
 					BigDecimal m1VolumeChange = getPercentage(quoteVolume, m1.quoteVolume());
 					BigDecimal m5VolumeChange = getPercentage(quoteVolume, m5.quoteVolume());
 					BigDecimal m15VolumeChange = getPercentage(quoteVolume, m15.quoteVolume());
@@ -90,6 +90,6 @@ public class Scanner {
 	}
 	
 	private boolean filter(Ticker ticker) {
-		return ticker.symbol().endsWith("USDT") && ticker.quoteVolume().compareTo(BigDecimal.valueOf(50000)) == 1;
+		return ticker.symbol().endsWith("USDT") && ticker.quoteVolume().compareTo(BigDecimal.valueOf(1000000)) == 1;
 	}
 }
